@@ -36,7 +36,7 @@ console.log(linearInterpolation(data, 2.5)) // 3.5
 console.log(linearInterpolation(data, 5)) // 6
 ```
 
-Bilinear interpolation enables data interpolation of a two-dimensional array of data points where the `x` and `y` dimensions are the axis of the provided grid and `z` are the provided data points. If the requested `x` or `y` is out of bounds, it will throw an error.
+Bilinear interpolation enables data interpolation of a two-dimensional array of data points where the `x` and `y` dimensions are the axis of the provided grid and `z` are the provided data points. If the requested `x` or `y` is out of bounds, it will provide an estimate given the nearest data points.
 
 ```javascript
 import { createBilinearInterpolationFunction } from 'js-interpolate';

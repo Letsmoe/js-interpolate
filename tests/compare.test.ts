@@ -17,6 +17,8 @@ describe("Bilinear interpolation", () => {
 		expect(bilinearInterpolation(0.5, 1)).toBe(3.5);
 		expect(bilinearInterpolation(1.5, 0.5)).toBe(6);
 		expect(bilinearInterpolation(1.5, 1.5)).toBe(7);
+		expect(bilinearInterpolation(3, 3)).toBe(13);
+		expect(bilinearInterpolation(4, 4)).toBe(17);
 	});
 })
 

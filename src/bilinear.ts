@@ -7,8 +7,19 @@ export function createBilinearInterpolationFunction(grid: number[][]) {
 
 	return function bilinearInterpolation(x: number, y: number) {
 			// Check if we're within grid bounds
-			if (x < 0 || y < 0 || x >= grid.length - 1 || y >= grid[0].length - 1) {
-					throw new Error("Interpolation point is out of bounds");
+			if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
+					// Extrapolate using the last 4x4 grid
+					const startX = Math.max(0, Math.min(grid.length - 4, Math.floor(x) - 1));
+					const startY = Math.max(0, Math.min(grid[0].length - 4, Math.floor(y) - 1));
+
+					// Calculate interpolation within the last 4x4 grid
+					const localX = x - startX;
+					const localY = y - startY;
+
+					// Perform bilinear interpolation
+					const qx00 = bilinearInterpolate(grid[startX][startY], grid[startX + 1][startY], grid[startX][startY + 1], grid[startX + 1][startY + 1], localX, localY);
+
+					return qx00;
 			}
 
 			// Check if interpolation value is cached
@@ -34,13 +45,19 @@ export function createBilinearInterpolationFunction(grid: number[][]) {
 
 			// Perform interpolation using cached parameters
 			const [x0, y0, x1, y1, dx, dy] = interpolationParamsCache[cacheKey];
-			const qx0 = grid[x0][y0] * (1 - dx) + grid[x1][y0] * dx;
-			const qx1 = grid[x0][y1] * (1 - dx) + grid[x1][y1] * dx;
-			const interpolatedValue = qx0 * (1 - dy) + qx1 * dy;
+			const qx00 = grid[x0][y0] * (1 - dx) + grid[x1][y0] * dx;
+			const qx10 = grid[x0][y1] * (1 - dx) + grid[x1][y1] * dx;
+			const interpolatedValue = qx00 * (1 - dy) + qx10 * dy;
 
 			// Cache interpolation value
 			interpolationValueCache[cacheKey] = interpolatedValue;
 
 			return interpolatedValue;
 	};
+}
+
+function bilinearInterpolate(q00: number, q10: number, q01: number, q11: number, dx: number, dy: number) {
+	const q0 = q00 * (1 - dx) + q10 * dx;
+	const q1 = q01 * (1 - dx) + q11 * dx;
+	return q0 * (1 - dy) + q1 * dy;
 }
