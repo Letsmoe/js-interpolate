@@ -9,6 +9,7 @@
 Dead simple data interpolation. 
 
 - [Usage](#usage)
+- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -51,6 +52,14 @@ const bilinearInterpolation = createBilinearInterpolationFunction(data);
 
 bilinearInterpolation(0.5, 0.5) // 3
 ```
+
+## Roadmap
+
+- [x] Linear interpolation
+- [x] Bilinear interpolation
+- [ ] Tricubic interpolation
+- [x] Polynomial interpolation
+- [ ] Spline interpolation
 
 ## Contributing
 
