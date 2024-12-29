@@ -24,7 +24,13 @@ describe("Bilinear interpolation", () => {
 
 
 describe("Linear interpolation", () => {
-	const data = [1, 2, 3, 4, 5];
+	const data = [{
+		x: 0,
+		y: 1
+	}, {
+		x: 1,
+		y: 2
+	}];
 
 	test("Interpolates correctly", () => {
 		expect(linearInterpolation(data, 0.5)).toBe(1.5);
@@ -32,6 +38,7 @@ describe("Linear interpolation", () => {
 		expect(linearInterpolation(data, 2.5)).toBe(3.5);
 		expect(linearInterpolation(data, 3.5)).toBe(4.5);
 		expect(linearInterpolation(data, 5)).toBe(6);
+		expect(linearInterpolation(data, 2000)).toBe(2001);
 	});
 })
 
